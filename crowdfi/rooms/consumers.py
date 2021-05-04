@@ -3,6 +3,92 @@ from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
 from django.conf import settings
 from uuid import uuid4
+import math
+import threading
+import time
+
+def game_simulation(state, dt):
+    print(state['players'])
+    
+    fdx, fdy = 0, 0
+
+    for player in state['players']:
+        dx = state['players'][player]['x'] - state['vote']['x']
+        dy = state['players'][player]['y'] - state['vote']['y']
+        d = math.sqrt(dx**2 + dy**2)
+
+        if d < 55:
+            state['players'][player]['x'] = state['vote']['x'] + dx / d * 55
+            state['players'][player]['y'] = state['vote']['y'] + dy / d * 55
+
+        f = state['vote']['charge'] / d**2
+        fdx += dx / d * f
+        fdy += dy / d * f
+
+    f = math.sqrt(fdx**2 + fdy**2)
+    drag = 9.81 * state['vote']['m'] * state['vote']['mu']
+
+    fdx -= fdx / f * drag
+    fdy -= fdy / f * drag
+
+    state['vote']['v']['x'] += fdx / state['vote']['m'] * dt
+    state['vote']['v']['y'] += fdy / state['vote']['m'] * dt
+
+    state['vote']['x'] += state['vote']['v']['x'] * dt
+    state['vote']['y'] += state['vote']['v']['y'] * dt
+
+    d = math.sqrt(state['vote']['x']**2 + state['vote']['y']**2)
+
+    if d > 300:
+        state['vote']['v']['x'] = 0
+        state['vote']['v']['y'] = 0
+        state['vote']['x'] = state['vote']['x'] / d * 300
+        state['vote']['y'] = state['vote']['y'] / d * 300
+
+    return state
+
+def check_winner(state):
+  for position in settings.POSITIONS:
+    dx = position[0] - state['vote']['x']
+    dy = position[1] - state['vote']['y']
+    d = math.sqrt(dx**2 + dy**2)
+
+    if d < 20:
+      return True
+
+  return False
+
+def update_game(game_id):
+    settings.GAME_STATES[game_id] = game_simulation(settings.GAME_STATES[game_id], 1/20)
+    
+    if check_winner(settings.GAME_STATES[game_id]):
+        for socket in settings.GAME_PLAYERS[game_id]:
+            socket.close()
+
+        settings.GAME_HOSTS[game_id].close()
+
+        del settings.GAME_HOSTS[game_id], settings.GAME_PLAYERS[game_id], settings.GAME_STATES[game_id]
+
+        return False
+
+    else:
+        for socket in settings.GAME_PLAYERS[game_id]:
+            socket.send(json.dumps(format_state_for_player(settings.GAME_STATES[game_id], socket.uid)))
+
+        settings.GAME_HOSTS[game_id].send(json.dumps(settings.GAME_STATES[game_id]))
+
+        return True
+
+def game_loop(game_id):
+    for _ in range(60 * 20):
+        start = time.time()
+
+        update_game(game_id)
+
+        diff = time.time() - start
+
+        if diff < 1/20:
+            time.sleep(diff)
 
 def format_state_for_player(state, playerid):
     return {
@@ -37,6 +123,8 @@ class ClientConsumer(WebsocketConsumer):
 
             self.accept()
 
+            settings.GAME_PLAYERS[self.room_id].append(self)
+            settings.GAME_HOSTS[self.room_id].send(json.dumps(settings.GAME_STATES[self.room_id]))
             self.send(json.dumps(format_state_for_player(settings.GAME_STATES[self.room_id], self.uid)))
 
         else:
@@ -45,6 +133,8 @@ class ClientConsumer(WebsocketConsumer):
     def disconnect(self, close_code):
         try:
             del settings.GAME_STATES[self.room_id]['players'][self.uid]
+            settings.GAME_PLAYERS[self.room_id].remove(self)
+            settings.GAME_HOSTS[self.room_id].send(json.dumps(settings.GAME_STATES[self.room_id]))
 
         except:
             pass
@@ -57,8 +147,7 @@ class ClientConsumer(WebsocketConsumer):
             'y': data['y'],
         }
 
-    def chat_message(self, data):
-        pass
+        settings.GAME_HOSTS[self.room_id].send(json.dumps(settings.GAME_STATES[self.room_id]))
 
 class HostConsumer(WebsocketConsumer):
     def connect(self):
@@ -76,7 +165,10 @@ class HostConsumer(WebsocketConsumer):
         self.accept()
 
     def disconnect(self, close_code):
-        pass
+        for socket in settings.GAME_PLAYERS[self.room_id]:
+            socket.close()
+
+        del settings.GAME_PLAYERS[self.room_id], settings.GAME_HOSTS[self.room_id], settings.GAME_STATES[self.room_id]
 
     def receive(self, text_data=''):
         data = json.loads(text_data)
@@ -102,11 +194,11 @@ class HostConsumer(WebsocketConsumer):
                 },
                 'players': {},
             }
+            
+            settings.GAME_HOSTS[self.room_id] = self
+            settings.GAME_PLAYERS[self.room_id] = []
 
             self.send(json.dumps(settings.GAME_STATES[self.room_id]))
 
         elif data['type'] == 'start':
-            pass
-
-    def chat_message(self, data):
-        pass
+            threading.Thread(target=game_loop, args=(self.room_id,), daemon=False).run()

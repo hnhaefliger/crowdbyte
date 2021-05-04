@@ -144,4 +144,6 @@ CHANNEL_LAYERS = {
 
 # Game data
 GAME_STATES = {}
+GAME_HOSTS = {}
+GAME_PLAYERS = {}
 POSITIONS = [[200, 0], [-200, 0], [-100, 173], [-100, -173], [100, 173], [100, -173]]

@@ -68,11 +68,15 @@ socket.onopen = () => {
     'option5': 'e',
     'option6': 'f',
     'm': 0.1,
-    'mu': 1,
-    'charge': 500000,
+    'mu': 0.01,
+    'charge': 500,
   }));
 };
 
 socket.onmessage = (message) => {
   drawGame(gameCanvas, JSON.parse(message.data));
+}
+
+socket.onclose = () => {
+  console.log('socket closed');
 }
