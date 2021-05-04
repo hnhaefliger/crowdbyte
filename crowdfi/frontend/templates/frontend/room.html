@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Stock Swarm</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static "frontend/room.css" %}">
+  </head>
+  <body>
+    <div id="prompt-container">
+      <h1 id="prompt">
+        How will...?
+      </h1>
+    </div>
+    <div id="game-container">
+      <canvas id="game">
+
+      </canvas>
+    </div>
+    {{ room_id|json_script:"room-id" }}
+    <script src="{% static "frontend/room.js" %}"></script>
+  </body>
+</html>
