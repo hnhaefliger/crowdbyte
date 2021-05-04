@@ -37,9 +37,7 @@ class ClientConsumer(WebsocketConsumer):
 
             self.accept()
 
-            self.send(text_data=json.dumps({
-                format_state_for_player(settings.GAME_STATES[self.room_id], self.uid)
-            }))
+            self.send(json.dumps(format_state_for_player(settings.GAME_STATES[self.room_id], self.uid)))
 
         else:
             self.close()
@@ -51,8 +49,8 @@ class ClientConsumer(WebsocketConsumer):
         except:
             pass
 
-    def receive(self, data):
-        data = json.loads(data)
+    def receive(self, text_data=''):
+        data = json.loads(text_data)
         
         settings.GAME_STATES[self.room_id]['players'][self.uid] = {
             'x': data['x'],
@@ -80,23 +78,23 @@ class HostConsumer(WebsocketConsumer):
     def disconnect(self, close_code):
         pass
 
-    def receive(self, data):
-        data = json.loads(data)
+    def receive(self, text_data=''):
+        data = json.loads(text_data)
         
         if data['type'] == 'setup':
             settings.GAME_STATES[self.room_id] = {
-                'option1': '',
-                'option2': '',
-                'option3': '',
-                'option4': '',
-                'option5': '',
-                'option6': '',
+                'option1': data['option1'],
+                'option2': data['option2'],
+                'option3': data['option3'],
+                'option4': data['option4'],
+                'option5': data['option5'],
+                'option6': data['option6'],
                 'vote': {
                     'x': 0,
                     'y': 0,
-                    'm': 0.1,
-                    'mu': 1,
-                    'charge': 500000,
+                    'm': data['m'],
+                    'mu': data['mu'],
+                    'charge': data['charge'],
                     'v': {
                         'x': 0,
                         'y': 0,
@@ -105,9 +103,7 @@ class HostConsumer(WebsocketConsumer):
                 'players': {},
             }
 
-            self.send(text_data=json.dumps({
-                settings.GAME_STATES[self.room_id]
-            }))
+            self.send(json.dumps(settings.GAME_STATES[self.room_id]))
 
         elif data['type'] == 'start':
             pass
