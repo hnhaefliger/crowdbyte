@@ -80,15 +80,24 @@ def update_game(game_id):
         return True
 
 def game_loop(game_id):
-    for _ in range(60 * 20):
-        start = time.time()
+    seconds = 60
+    fps = 20
 
-        update_game(game_id)
-
-        diff = time.time() - start
-
-        if diff < 1/20:
-            time.sleep(1/20 - diff)
+    def wrapper():
+        return update_game(game_id)
+    
+    timer = set_interval(1/fps, wrapper, seconds*fps)
+    
+def set_interval(t, function, i):
+    if i > 0:
+        def wrapper():
+            set_interval(t, function, i-1)
+            function()
+    
+        timer = threading.Timer(t, wrapper)
+        timer.start()
+        
+        return timer
 
 def format_state_for_player(state, playerid):
     return {
