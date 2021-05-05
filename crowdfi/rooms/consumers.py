@@ -58,16 +58,11 @@ def check_winner(state):
 
 def update_game(game_id):
     settings.GAME_STATES[game_id] = game_simulation(settings.GAME_STATES[game_id], 1/20)
-    
+        
     if check_winner(settings.GAME_STATES[game_id]):
-        for socket in settings.GAME_PLAYERS[game_id]:
-            socket.close()
-
         settings.GAME_HOSTS[game_id].close()
 
-        del settings.GAME_HOSTS[game_id], settings.GAME_PLAYERS[game_id], settings.GAME_STATES[game_id]
-
-        return False
+        return True
 
     else:
         for socket in settings.GAME_PLAYERS[game_id]:
@@ -75,7 +70,7 @@ def update_game(game_id):
 
         settings.GAME_HOSTS[game_id].send(json.dumps(settings.GAME_STATES[game_id]))
 
-        return True
+        return False
 
 def game_loop(game_id):
     seconds = 60
@@ -89,8 +84,9 @@ def game_loop(game_id):
 def set_interval(t, function, i):
     if i > 0:
         def wrapper():
-            set_interval(t, function, i-1)
-            function()
+            thread = set_interval(t, function, i-1)
+            if function():
+                thread.cancel()
     
         timer = threading.Timer(t, wrapper)
         timer.start()
