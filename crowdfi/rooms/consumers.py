@@ -88,7 +88,7 @@ def game_loop(game_id):
         diff = time.time() - start
 
         if diff < 1/20:
-            time.sleep(diff)
+            time.sleep(1/20 - diff)
 
 def format_state_for_player(state, playerid):
     return {
