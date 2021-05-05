@@ -8,8 +8,6 @@ import threading
 import time
 
 def game_simulation(state, dt):
-    print(state['players'])
-    
     fdx, fdy = 0, 0
 
     for player in state['players']:
@@ -86,7 +84,7 @@ def game_loop(game_id):
     def wrapper():
         return update_game(game_id)
     
-    timer = set_interval(1/fps, wrapper, seconds*fps)
+    set_interval(1/fps, wrapper, seconds*fps)
     
 def set_interval(t, function, i):
     if i > 0:

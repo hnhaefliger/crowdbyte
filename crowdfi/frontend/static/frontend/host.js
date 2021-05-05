@@ -69,7 +69,7 @@ socket.onopen = () => {
     'option6': 'f',
     'm': 0.1,
     'mu': 0.01,
-    'charge': 500,
+    'charge': 50000,
   }));
 };
 
