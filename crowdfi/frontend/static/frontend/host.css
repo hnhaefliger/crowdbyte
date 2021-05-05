@@ -15,10 +15,19 @@ body {
     background-color: #3d84b8;
     text-align: center;
     z-index: 1;
+    padding: 20px;
+}
+
+#info-box {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    align-items: center;
 }
   
-#prompt {
-    font-size: 40px;
+.text {
+    font-size: 20px;
+    font-family: "Montserrat";
     color: #f0ebcc;
 }
   
@@ -30,6 +39,10 @@ body {
     height: 100vh;
 }
   
-#game {
-  
-}  
+#startbtn {
+    font-size: 20px;
+    padding: 10px;
+    font-family: "Montserrat";
+    margin: 0;
+    background-color: #f0ebcc;;
+}

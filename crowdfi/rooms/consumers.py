@@ -95,6 +95,7 @@ def set_interval(t, function, i):
 
 def format_state_for_player(state, playerid):
     return {
+        'prompt': state['prompt'],
         'option1': state['option1'],
         'option2': state['option2'],
         'option3': state['option3'],
@@ -178,6 +179,7 @@ class HostConsumer(WebsocketConsumer):
         
         if data['type'] == 'setup':
             settings.GAME_STATES[self.room_id] = {
+                'prompt': data['prompt'],
                 'option1': data['option1'],
                 'option2': data['option2'],
                 'option3': data['option3'],

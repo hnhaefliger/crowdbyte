@@ -1,5 +1,7 @@
+const participants = document.getElementById('participants');
 const prompt = document.getElementById('prompt');
-const game = document.getElementById('game');
+const gameid = document.getElementById('roomid');
+const start = document.getElementById('startbtn');
 const gameCanvas = game.getContext('2d');
 
 const width = document.getElementsByTagName('body')[0].getBoundingClientRect().width;
@@ -9,6 +11,17 @@ const centerY = height / 2 + 50;
 
 gameCanvas.canvas.width  = width;
 gameCanvas.canvas.height = height;
+
+function findGetParameter(parameterName) {
+    var result = null,
+        tmp = [];
+    var items = location.search.substr(1).split("&");
+    for (var index = 0; index < items.length; index++) {
+        tmp = items[index].split("=");
+        if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+    }
+    return result;
+}
 
 const drawDot = (canvas, x, y, r, color) => {
   canvas.fillStyle = color;
@@ -23,6 +36,9 @@ const drawText = (canvas, x, y, text, color) => {
 }
 
 const drawGame = (canvas, state) => {
+  prompt.innerHTML = state.prompt;
+  participants.innerHTML = Object.keys(state.players).length + ' Players';
+  
   canvas.clearRect(0, 0, canvas.width, canvas.height);
 
   canvas.font = "30px Montserrat";
@@ -58,18 +74,21 @@ const roomId = JSON.parse(document.getElementById('room-id').textContent);
 
 const socket = new WebSocket('ws://' + window.location.host + '/ws/host/' + roomId + '/');
 
+gameid.innerHTML = roomId;
+
 socket.onopen = () => {
   socket.send(JSON.stringify({
     'type': 'setup',
-    'option1': 'a',
-    'option2': 'b',
-    'option3': 'c',
-    'option4': 'd',
-    'option5': 'e',
-    'option6': 'f',
-    'm': 0.1,
-    'mu': 0.01,
-    'charge': 5000,
+    'prompt': findGetParameter('prompt'),
+    'option1': findGetParameter('answer1'),
+    'option2': findGetParameter('answer2'),
+    'option3': findGetParameter('answer3'),
+    'option4': findGetParameter('answer4'),
+    'option5': findGetParameter('answer5'),
+    'option6': findGetParameter('answer6'),
+    'm': parseFloat(findGetParameter('m')),
+    'mu': parseFloat(findGetParameter('mu')),
+    'charge': parseFloat(findGetParameter('charge')),
   }));
 };
 
@@ -80,3 +99,7 @@ socket.onmessage = (message) => {
 socket.onclose = () => {
   console.log('socket closed');
 }
+
+start.addEventListener('click', (event) => {
+  socket.send(JSON.stringify({'type': 'start'}));
+});

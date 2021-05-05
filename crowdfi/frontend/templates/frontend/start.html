@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Swarm</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static "frontend/start.css" %}">
+</head>
+
+<body>
+    <div id="main-container">
+        <form id="join-form">
+            <input id="prompt" class="option" type="text" placeholder="Prompt"></input>
+            <input id="answer-1" class="option" type="text" placeholder="Answer 1"></input>
+            <input id="answer-2" class="option" type="text" placeholder="Answer 2"></input>
+            <input id="answer-3" class="option" type="text" placeholder="Answer 3"></input>
+            <input id="answer-4" class="option" type="text" placeholder="Answer 4"></input>
+            <input id="answer-5" class="option" type="text" placeholder="Answer 5"></input>
+            <input id="answer-6" class="option" type="text" placeholder="Answer 6"></input>
+            <input id="mu" class="option" type="text" placeholder="Mu"></input>
+            <input id="m" class="option" type="text" placeholder="M"></input>
+            <input id="charge" class="option" type="text" placeholder="Charge"></input>
+            <button id="room-join" type="button">Join room</button>
+        </form>
+    </div>
+    <script src="{% static "frontend/start.js" %}"></script>
+</body>
+
+</html>

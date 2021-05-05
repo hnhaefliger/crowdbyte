@@ -25,6 +25,10 @@ const drawText = (canvas, x, y, text, color) => {
 }
 
 const drawGame = (canvas, state) => {
+  prompt.innerHTML = state.prompt;
+
+  canvas.clearRect(0, 0, canvas.width, canvas.height);
+
   canvas.font = "30px Montserrat";
   gameCanvas.fillStyle = '#f0ebcc';
   gameCanvas.fillRect(0, 0, game.width, game.height);
@@ -62,7 +66,7 @@ socket.onmessage = (message) => {
 }
 
 socket.onclose = () => {
-  console.log('socket closed');
+  window.location.replace('http://192.168.1.124:8000/room');
 }
 
 gameCanvas.canvas.addEventListener("mousemove", (event) => {

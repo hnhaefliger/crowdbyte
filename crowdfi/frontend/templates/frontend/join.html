@@ -1,0 +1,24 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Swarm</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static "frontend/join.css" %}">
+</head>
+
+<body>
+    <div id="main-container">
+        <form id="join-form">
+            <input id="room-id" type="text" placeholder="Room ID"></input>
+            <button id="room-join" type="button">Join room</button>
+        </form>
+    </div>
+    <script src="{% static "frontend/join.js" %}"></script>
+</body>
+
+</html>
