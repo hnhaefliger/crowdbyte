@@ -201,4 +201,4 @@ class HostConsumer(WebsocketConsumer):
             self.send(json.dumps(settings.GAME_STATES[self.room_id]))
 
         elif data['type'] == 'start':
-            threading.Thread(target=game_loop, args=(self.room_id,), daemon=False).run()
+            threading.Thread(target=game_loop, args=(self.room_id,), daemon=False).start()
