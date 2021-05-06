@@ -27,7 +27,7 @@ body {
 .text {
     font-size: 20px;
     font-family: "Montserrat";
-    color: #f0ebcc;
+    color: #f3f4f6;
 }
   
 #game-container {
@@ -43,5 +43,14 @@ body {
     padding: 10px;
     font-family: "Montserrat";
     margin: 0;
-    background-color: #f0ebcc;;
+    width: 100%;
+    background-color: transparent;
+    border: 2px solid #21486b;
+    border-radius: 30px;
+    color: #1f7eeb;
+}
+
+#startbtn:hover {
+    background-color: #21486b;
+    color: #1f7eeb;
 }
