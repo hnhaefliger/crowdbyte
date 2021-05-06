@@ -146,12 +146,16 @@ class ClientConsumer(WebsocketConsumer):
     def receive(self, text_data=''):
         data = json.loads(text_data)
         
-        settings.GAME_STATES[self.room_id]['players'][self.uid] = {
-            'x': data['x'],
-            'y': data['y'],
-        }
+        try:
+            settings.GAME_STATES[self.room_id]['players'][self.uid] = {
+                'x': data['x'],
+                'y': data['y'],
+            }
 
-        settings.GAME_HOSTS[self.room_id].send(json.dumps(settings.GAME_STATES[self.room_id]))
+            settings.GAME_HOSTS[self.room_id].send(json.dumps(settings.GAME_STATES[self.room_id]))
+
+        except:
+            pass
 
 class HostConsumer(WebsocketConsumer):
     def connect(self):
