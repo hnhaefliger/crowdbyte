@@ -5,8 +5,9 @@ body {
     height: 100vh;
     font-family: "Montserrat";
     overflow: hidden;
+    background-color: #252c4a;
 }
-  
+
 #main-container {
     width: 100vw;
     height: 100vh;
@@ -30,6 +31,19 @@ body {
     margin-bottom: 10px;
     width: 100%;
     box-sizing: border-box;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #21486b;
+    color: #1f7eeb;
+    text-align: center;
+}
+
+.option::placeholder {
+    color: #1f7eeb;
+}
+
+.option:focus {
+    outline: none;
 }
 
 #room-join {
@@ -38,4 +52,13 @@ body {
     font-family: "Montserrat";
     margin: 0;
     width: 100%;
+    background-color: transparent;
+    border: 2px solid #21486b;
+    border-radius: 30px;
+    color: #1f7eeb;
+}
+
+#room-join:hover {
+    background-color: #21486b;
+    color: #1f7eeb;
 }
