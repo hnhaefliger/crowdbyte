@@ -1,35 +1,36 @@
 body {
-    padding: 0;
-    margin: 0;
-    width: 100vw;
-    height: 100vh;
-    font-family: "Montserrat";
-    overflow: hidden;
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  font-family: "Montserrat";
+  overflow: hidden;
+  background-color: #252c4a;
 }
-  
+
 #prompt-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    background-color: #3d84b8;
-    text-align: center;
-    z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #252c4a;
+  text-align: center;
+  z-index: 1;
 }
-  
+
 #prompt {
-    font-size: 40px;
-    color: #f0ebcc;
+  font-size: 40px;
+  color: #f3f4f6;
 }
-  
+
 #game-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
 }
-  
+
 #game {
-  
-}  
+
+}
