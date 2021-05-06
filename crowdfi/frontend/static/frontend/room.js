@@ -12,48 +12,75 @@ gameCanvas.canvas.height = height;
 
 var state = {'option1': 'abcd', 'option2': 'efgh', 'option3': 'ijkl', 'option4': 'nopq', 'option5': 'rstu', 'option6': 'vwxy', 'vote': { 'x': 0, 'y': 0, 'm': 0.1, 'mu': 1, 'charge': 500, 'v': { 'x': 0, 'y': 0, }, }, 'player': { 'x': 100, 'y': 100, }, }
 
-const drawDot = (canvas, x, y, r, color) => {
-  canvas.fillStyle = color;
+const drawDot = (canvas, x, y, r, color, width=10) => {
+  canvas.lineWidth = width;
+  canvas.strokeStyle = color;
   canvas.beginPath();
   canvas.ellipse(x, y, r, r, 0, 0, 2*Math.PI);
-  canvas.fill();
+  canvas.stroke();
 }
 
-const drawText = (canvas, x, y, text, color) => {
+const drawText = (canvas, x, y, text, font, color) => {
   canvas.fillStyle = color;
+  canvas.font = font;
   canvas.fillText(text, x, y);
+}
+
+const drawLine = (canvas, x1, y1, x2, y2, color, width) => {
+  canvas.lineWidth = width;
+  canvas.strokeStyle = color;
+  canvas.beginPath();
+  canvas.moveTo(x1, y1);
+  canvas.lineTo(x2, y2);
+  canvas.stroke();
+}
+
+const drawRect = (canvas, x1, y1, x2, y2, color) => {
+  canvas.fillStyle = color;
+  canvas.fillRect(x1, y1, x2, y2);
 }
 
 const drawGame = (canvas, state) => {
   prompt.innerHTML = state.prompt;
 
+  // reset
   canvas.clearRect(0, 0, canvas.width, canvas.height);
+  
+  // background
+  drawRect(canvas, 0, 0, game.width, game.height, '#252c4a')
 
-  canvas.font = "30px Montserrat";
-  gameCanvas.fillStyle = '#f0ebcc';
-  gameCanvas.fillRect(0, 0, game.width, game.height);
+  // lines between options
+  drawLine(canvas, -200 + centerX + 10, 0 + centerY - 17, -100 + centerX - 10, -173 + centerY + 17, '#21486b', 5);
+  drawLine(canvas, -100 + centerX + 20, -173 + centerY, 100 + centerX - 20, -173 + centerY, '#21486b', 5);
+  drawLine(canvas, 100 + centerX + 10, -173 + centerY + 17, 200 + centerX - 10, 0 + centerY - 17, '#21486b', 5);
+  drawLine(canvas, 200 + centerX - 10, 0 + centerY + 17, 100 + centerX + 10, 173 + centerY - 17, '#21486b', 5);
+  drawLine(canvas, 100 + centerX - 20, 173 + centerY, -100 + centerX + 20, 173 + centerY, '#21486b', 5);
+  drawLine(canvas, -100 + centerX - 10, 173 + centerY - 17, -200 + centerX + 10, 0 + centerY + 17, '#21486b', 5);
 
-  drawDot(canvas, state.vote.x + centerX, state.vote.y + centerY, 40, '#344fa1');
-  drawDot(canvas, -200 + centerX, 0 + centerY, 20, '#3f3697');
-  drawDot(canvas, -100 + centerX, -173 + centerY, 20, '#3f3697');
-  drawDot(canvas, 100 + centerX, -173 + centerY, 20, '#3f3697');
-  drawDot(canvas, 200 + centerX, 0 + centerY, 20, '#3f3697');
-  drawDot(canvas, 100 + centerX, 173 + centerY, 20, '#3f3697');
-  drawDot(canvas, -100 + centerX, 173 + centerY, 20, '#3f3697');
+  // options
+  drawDot(canvas, -200 + centerX, 0 + centerY, 20, '#1f7eeb', 5);
+  drawDot(canvas, -100 + centerX, -173 + centerY, 20, '#1f7eeb', 5);
+  drawDot(canvas, 100 + centerX, -173 + centerY, 20, '#1f7eeb', 5);
+  drawDot(canvas, 200 + centerX, 0 + centerY, 20, '#1f7eeb', 5);
+  drawDot(canvas, 100 + centerX, 173 + centerY, 20, '#1f7eeb', 5);
+  drawDot(canvas, -100 + centerX, 173 + centerY, 20, '#1f7eeb', 5);
 
-  drawText(canvas, -200 + centerX - 60, 0 + centerY - 30, state.option1, '#3f3697');
-  drawText(canvas, -100 + centerX - 60, -173 + centerY - 30, state.option2, '#3f3697');
-  drawText(canvas, 100 + centerX - 60, -173 + centerY - 30, state.option3, '#3f3697');
-  drawText(canvas, 200 + centerX - 60, 0 + centerY - 30, state.option4, '#3f3697');
-  drawText(canvas, 100 + centerX - 60, 173 + centerY + 50, state.option5, '#3f3697');
-  drawText(canvas, -100 + centerX - 60, 173 + centerY + 50, state.option6, '#3f3697');
+  // puck
+  drawDot(canvas, state.vote.x + centerX, state.vote.y + centerY, 40, '#41935a', 10);
 
-  drawDot(canvas, state.player.x + centerX, state.player.y + centerY, 15, 'green');
+  // answers
+  drawText(canvas, -200 + centerX - 60, 0 + centerY - 30, state.option1, '30px Montserrat', '#f3f4f6');
+  drawText(canvas, -100 + centerX - 60, -173 + centerY - 30, state.option2, '30px Montserrat', '#f3f4f6');
+  drawText(canvas, 100 + centerX - 60, -173 + centerY - 30, state.option3, '30px Montserrat', '#f3f4f6');
+  drawText(canvas, 200 + centerX - 60, 0 + centerY - 30, state.option4, '30px Montserrat', '#f3f4f6');
+  drawText(canvas, 100 + centerX - 60, 173 + centerY + 50, state.option5, '30px Montserrat', '#f3f4f6');
+  drawText(canvas, -100 + centerX - 60, 173 + centerY + 50, state.option6, '30px Montserrat', '#f3f4f6');
 
-  canvas.fillStyle = '#3f3697';
-  canvas.beginPath();
-  canvas.ellipse(0 + centerX, 0 + centerY, 340, 340, 0, 0, 2*Math.PI);
-  canvas.stroke();
+  // player
+  drawDot(canvas, state.player.x + centerX, state.player.y + centerY, 15, '41935a', 10);
+
+  // boundary
+  //drawDot(canvas, 0 + centerX, 0 + centerY, 340, '#ed4f77', 5);
 }
 
 const roomId = JSON.parse(document.getElementById('room-id').textContent);
