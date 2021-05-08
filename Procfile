@@ -1,1 +1,1 @@
-web: daphne --root-path=/crowdbyte crowdbyte.crowdbyte.asgi:channel_layer --port $PORT --bind 0.0.0.0 -v2
+web: cd crowdbyte && daphne --root-path=/crowdbyte crowdbyte.crowdbyte.asgi:channel_layer --port $PORT --bind 0.0.0.0 -v2
