@@ -51,7 +51,7 @@ def check_winner(state):
     dy = position[1] - state['vote']['y']
     d = math.sqrt(dx**2 + dy**2)
 
-    if d < 20:
+    if d < 10:
       return True
 
   return False
