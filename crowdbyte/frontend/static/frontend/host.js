@@ -80,12 +80,12 @@ const drawGame = (canvas, state) => {
   drawDot(canvas, state.vote.x + centerX, state.vote.y + centerY, 40, '#41935a', 10);
 
   // answers
-  drawText(canvas, -200 + centerX - 60, 0 + centerY - 30, state.option1, '30px Montserrat', '#f3f4f6');
-  drawText(canvas, -100 + centerX - 60, -173 + centerY - 30, state.option2, '30px Montserrat', '#f3f4f6');
-  drawText(canvas, 100 + centerX - 60, -173 + centerY - 30, state.option3, '30px Montserrat', '#f3f4f6');
-  drawText(canvas, 200 + centerX - 60, 0 + centerY - 30, state.option4, '30px Montserrat', '#f3f4f6');
-  drawText(canvas, 100 + centerX - 60, 173 + centerY + 50, state.option5, '30px Montserrat', '#f3f4f6');
-  drawText(canvas, -100 + centerX - 60, 173 + centerY + 50, state.option6, '30px Montserrat', '#f3f4f6');
+  drawText(canvas, -200 + centerX - 60, 0 + centerY - 30, state.option1, '15px Montserrat', '#f3f4f6');
+  drawText(canvas, -100 + centerX - 60, -173 + centerY - 30, state.option2, '15px Montserrat', '#f3f4f6');
+  drawText(canvas, 100 + centerX - 60, -173 + centerY - 30, state.option3, '15px Montserrat', '#f3f4f6');
+  drawText(canvas, 200 + centerX - 60, 0 + centerY - 30, state.option4, '15px Montserrat', '#f3f4f6');
+  drawText(canvas, 100 + centerX - 60, 173 + centerY + 50, state.option5, '15px Montserrat', '#f3f4f6');
+  drawText(canvas, -100 + centerX - 60, 173 + centerY + 50, state.option6, '15px Montserrat', '#f3f4f6');
 
   // players
   Object.keys(state.players).forEach(player => {
