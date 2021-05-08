@@ -85,7 +85,7 @@ const drawGame = (canvas, state) => {
 
 const roomId = JSON.parse(document.getElementById('room-id').textContent);
 
-const socket = new WebSocket('wss://' + window.location.host + '/ws/room/' + roomId + '/');
+const socket = new WebSocket('ws://' + window.location.host + '/ws/room/' + roomId + '/');
 
 socket.onmessage = (message) => {
   state = JSON.parse(message.data);
