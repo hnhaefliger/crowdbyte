@@ -90,6 +90,7 @@ const socket = new WebSocket(ws + window.location.host + '/ws/room/' + roomId + 
 
 socket.onmessage = (message) => {
   tmpState = JSON.parse(message.data);
+  state.options = tmpState.vote;
   state.vote = tmpState.vote;
   drawGame(gameCanvas, state);
 }
