@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 
 def start(request):
     return render(request, 'frontend/start.html')
@@ -17,4 +18,4 @@ def host(request, room_id):
     })
 
 def cert(request):
-    return 'bPBXnTTIHP-0dTFV52yTu1KtUfZ1nBtg-Lp5uMkY-0M.gDZ5atBUq--CVc08u9jv_1_j8_bRh62ypuVIS1XgapU'
+    return HttpResponse('bPBXnTTIHP-0dTFV52yTu1KtUfZ1nBtg-Lp5uMkY-0M.gDZ5atBUq--CVc08u9jv_1_j8_bRh62ypuVIS1XgapU')
