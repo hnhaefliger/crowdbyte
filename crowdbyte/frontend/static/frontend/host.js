@@ -127,7 +127,7 @@ socket.onclose = () => {
   console.log('socket closed');
 }
 
-socket.onmessage = (error) => {
+socket.error = (error) => {
   console.log(error);
 }
 
