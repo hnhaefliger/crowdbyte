@@ -89,7 +89,8 @@ const ws = window.location.protocol == "https:" ? "wss://" : "ws://"
 const socket = new WebSocket(ws + window.location.host + '/ws/room/' + roomId + '/');
 
 socket.onmessage = (message) => {
-  state = JSON.parse(message.data);
+  tmpState = JSON.parse(message.data);
+  state.vote = tmpState.vote;
   drawGame(gameCanvas, state);
 }
 
