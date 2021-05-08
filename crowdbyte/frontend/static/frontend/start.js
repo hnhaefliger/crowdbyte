@@ -25,7 +25,7 @@ function makeid(length) {
 
 roomJoin.addEventListener('click', (event) => {
     if (mu.value && m.value && charge.value && answer1.value) {
-        window.location.replace('http://192.168.1.124:8000/host/' + makeid(16)
+        window.location.replace('/host/' + makeid(16)
         + '?prompt=' + prompt.value
         + '&answer1=' + answer1.value
         + '&answer2=' + answer2.value

@@ -85,7 +85,7 @@ const drawGame = (canvas, state) => {
 
 const roomId = JSON.parse(document.getElementById('room-id').textContent);
 
-const socket = new WebSocket('ws://' + window.location.host + '/ws/room/' + roomId + '/');
+const socket = new WebSocket('wss://' + window.location.host + '/ws/room/' + roomId + '/');
 
 socket.onmessage = (message) => {
   state = JSON.parse(message.data);
@@ -93,7 +93,7 @@ socket.onmessage = (message) => {
 }
 
 socket.onclose = () => {
-  window.location.replace('http://192.168.1.124:8000/room');
+  window.location.replace('/room');
 }
 
 gameCanvas.canvas.addEventListener("mousemove", (event) => {
