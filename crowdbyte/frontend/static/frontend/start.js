@@ -25,7 +25,7 @@ function makeid(length) {
 
 roomJoin.addEventListener('click', (event) => {
     if (mu.value && m.value && charge.value) {
-        window.location.replace('/host/' + makeid(16)
+        window.location.replace(encodeURI('/host/' + makeid(16)
         + '?prompt=' + prompt.value
         + '&answer1=' + answer1.value
         + '&answer2=' + answer2.value
@@ -36,6 +36,6 @@ roomJoin.addEventListener('click', (event) => {
         + '&mu=' + mu.value
         + '&m=' + m.value
         + '&charge=' + charge.value
-        );
+        ));
     }
 });
