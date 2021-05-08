@@ -126,6 +126,10 @@ socket.onclose = () => {
   console.log('socket closed');
 }
 
+socket.onmessage = (error) => {
+  console.log(error);
+}
+
 start.addEventListener('click', (event) => {
   socket.send(JSON.stringify({'type': 'start'}));
 });
