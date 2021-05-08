@@ -123,7 +123,8 @@ socket.onmessage = (message) => {
   drawGame(gameCanvas, JSON.parse(message.data));
 }
 
-socket.onclose = () => {
+socket.onclose = (message) => {
+  console.log(message);
   console.log('socket closed');
 }
 
