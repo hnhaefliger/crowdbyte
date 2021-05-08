@@ -56,7 +56,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'crowdfi.urls'
+ROOT_URLCONF = 'crowdbyte.urls'
 
 TEMPLATES = [
     {
@@ -74,7 +74,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'crowdfi.wsgi.application'
+WSGI_APPLICATION = 'crowdbyte.wsgi.application'
 
 
 # Database
@@ -134,7 +134,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
 # Channels
-ASGI_APPLICATION = 'crowdfi.asgi.application'
+ASGI_APPLICATION = 'crowdbyte.asgi.application'
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels_redis.core.RedisChannelLayer',
