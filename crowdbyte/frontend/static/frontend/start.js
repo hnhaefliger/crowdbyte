@@ -24,8 +24,8 @@ function makeid(length) {
 }
 
 roomJoin.addEventListener('click', (event) => {
-    if (mu.value && m.value && charge.value && answer1.value) {
-        window.location.replace('https://crowdbyte.herokuapp.com/host/' + makeid(16)
+    if (mu.value && m.value && charge.value) {
+        window.location.replace('/host/' + makeid(16)
         + '?prompt=' + prompt.value
         + '&answer1=' + answer1.value
         + '&answer2=' + answer2.value
