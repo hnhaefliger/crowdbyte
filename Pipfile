@@ -8,6 +8,7 @@ django = "*"
 channels = "*"
 uuid = "*"
 channels-redis = "*"
+django-on-heroku = "*"
 
 [dev-packages]
 

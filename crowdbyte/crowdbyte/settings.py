@@ -150,3 +150,6 @@ GAME_STATES = {}
 GAME_HOSTS = {}
 GAME_PLAYERS = {}
 POSITIONS = [[200, 0], [-200, 0], [-100, 173], [-100, -173], [100, 173], [100, -173]]
+
+import django_on_heroku
+django_on_heroku.settings(locals())
