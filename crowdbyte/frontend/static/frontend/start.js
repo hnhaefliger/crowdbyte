@@ -39,3 +39,10 @@ roomJoin.addEventListener('click', (event) => {
         ));
     }
 });
+
+document.addEventListener('keyup', (event) => {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    roomJoin.click();
+  }
+});

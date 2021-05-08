@@ -135,3 +135,10 @@ socket.onerror = (error) => {
 start.addEventListener('click', (event) => {
   socket.send(JSON.stringify({'type': 'start'}));
 });
+
+document.addEventListener('keyup', (event) => {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+    start.click();
+  }
+});

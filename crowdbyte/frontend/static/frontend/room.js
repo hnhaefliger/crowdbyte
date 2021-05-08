@@ -129,3 +129,9 @@ gameCanvas.canvas.addEventListener("mousemove", (event) => {
 });
 
 drawGame(gameCanvas, state);
+
+document.addEventListener('keyup', (event) => {
+  if (event.keyCode === 13) {
+    event.preventDefault();
+  }
+});
