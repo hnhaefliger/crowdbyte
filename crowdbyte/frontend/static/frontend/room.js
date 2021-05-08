@@ -90,7 +90,13 @@ const socket = new WebSocket(ws + window.location.host + '/ws/room/' + roomId + 
 
 socket.onmessage = (message) => {
   tmpState = JSON.parse(message.data);
-  state.options = tmpState.vote;
+  state.prompt = tmpState.prompt;
+  state.option1 = tmpState.option1;
+  state.option2 = tmpState.option2;
+  state.option3 = tmpState.option3;
+  state.option4 = tmpState.option4;
+  state.option5 = tmpState.option5;
+  state.option6 = tmpState.option6;
   state.vote = tmpState.vote;
   drawGame(gameCanvas, state);
 }
