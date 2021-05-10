@@ -162,6 +162,14 @@ class ClientConsumer(WebsocketConsumer):
                 'x': data['x'],
                 'y': data['y'],
             }
+            
+            dx = settings.GAME_STATES[self.room_id]['players'][self.uid]['x'] - settings.GAME_STATES[self.room_id]['vote']['x']
+            dy = settings.GAME_STATES[self.room_id]['players'][self.uid]['y'] - settings.GAME_STATES[self.room_id]['vote']['y']
+            d = math.sqrt(dx**2 + dy**2)
+
+            if d < 55:
+                settings.GAME_STATES[self.room_id]['players'][self.uid]['x'] = settings.GAME_STATES[self.room_id]['vote']['x'] + dx / d * 55
+                settings.GAME_STATES[self.room_id]['players'][self.uid]['y'] = settings.GAME_STATES[self.room_id]['vote']['y'] + dy / d * 55
 
             settings.GAME_HOSTS[self.room_id].send(json.dumps(settings.GAME_STATES[self.room_id]))
 
