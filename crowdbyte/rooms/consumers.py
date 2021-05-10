@@ -24,13 +24,24 @@ def game_simulation(state, dt):
         fdy += dy / d * f
 
     f = math.sqrt(fdx**2 + fdy**2)
-    drag = 9.81 * state['vote']['m'] * state['vote']['mu']
-
-    fdx -= fdx / f * drag
-    fdy -= fdy / f * drag
 
     state['vote']['v']['x'] += fdx / state['vote']['m'] * dt
     state['vote']['v']['y'] += fdy / state['vote']['m'] * dt
+    v = math.sqrt(state['vote']['v']['x']**2 + state['vote']['v']['y']**2)
+    
+    drag = 9.81 * state['vote']['mu'] # * m
+    drag_x = state['vote']['v']['x'] / v * drag * dt # / m
+
+    if abs(drag_x) > abs(state['vote']['v']['x']):
+        drag_x = state['vote']['v']['x']
+    
+    drag_y = state['vote']['v']['y'] / v * drag * dt # / m
+
+    if abs(drag_y) > abs(state['vote']['v']['y']):
+        drag_y = state['vote']['v']['y']
+
+    state['vote']['v']['x'] -= drag_x
+    state['vote']['v']['y'] -= drag_y
 
     state['vote']['x'] += state['vote']['v']['x'] * dt
     state['vote']['y'] += state['vote']['v']['y'] * dt
