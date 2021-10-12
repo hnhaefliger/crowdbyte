@@ -4,7 +4,7 @@ Crowdbyte was inspired by the work on artificial swarm intelligence done a [Unan
 
 The principle difference between this and voting is that community members are able to implicity negotiate and update their views in real time to reach a consensus without bias.
 
-[The voter/player dashboard](https://github.com/hnhaefliger/crowdbyte/blob/main/demo/Screenshot%20from%202021-10-12%2008-09-44.png)
+![The voter/player dashboard](https://github.com/hnhaefliger/crowdbyte/blob/main/demo/Screenshot%20from%202021-10-12%2008-09-44.png)
 
 
 
